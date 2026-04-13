@@ -1,0 +1,5 @@
+﻿ledger_id,product_id,transaction_date,transaction_type,reference_type,quantity,balance_quantity,rate,warehouse,remarks
+1,Pro001,2026-04-01,Inward,Purchase,5000,19400,1350,Panipat Warehouse,New stock received
+2,Pro001,2026-04-03,Outward,Order#1,-1800,17600,1370,Panipat Warehouse,Dispatched to Nahar Pacs
+3,Pro001,2026-04-05,Outward,Order#2,-800,16800,1370,Panipat Warehouse,Dispatched to Palwal Pacs
+4,Pro001,2026-04-05,Outward,Order#3,-800,16800,1370,Panipat Warehouse,Dispatched to Palwal Pacs

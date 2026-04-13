@@ -1,0 +1,1570 @@
+
+<style>
+:root{
+  --font-sans:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+  --color-text-primary:#1f2937;
+  --color-text-secondary:#6b7280;
+  --color-text-tertiary:#9ca3af;
+  --color-text-info:#ffffff;
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f8fafc;
+  --color-background-tertiary:#eef2f7;
+  --color-background-info:#185fa5;
+  --color-border-secondary:#cbd5e1;
+  --color-border-tertiary:#e2e8f0;
+  --color-border-info:#185fa5;
+  --border-radius-md:10px;
+  --border-radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary);background:var(--color-background-tertiary)}
+.app{display:flex;height:100vh;min-height:600px}
+.sidebar{width:220px;min-width:220px;background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;overflow-y:auto}
+.logo{padding:16px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.logo-title{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.logo-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.nav-section{padding:8px 0}
+.nav-label{font-size:10px;font-weight:500;color:var(--color-text-tertiary);padding:6px 16px 4px;text-transform:uppercase;letter-spacing:0.5px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 16px;cursor:pointer;font-size:13px;color:var(--color-text-secondary);border-left:2px solid transparent;transition:all 0.15s}
+.nav-item:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-item.active{background:var(--color-background-info);color:var(--color-text-info);border-left-color:var(--color-border-info);font-weight:500}
+.nav-icon{font-size:14px;width:16px;text-align:center}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{padding:12px 20px;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
+.page-title{font-size:16px;font-weight:500}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.topbar-select{padding:6px 10px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.topbar-select:focus{outline:none;border-color:var(--color-border-info);box-shadow:0 0 0 3px rgba(24,95,165,0.12)}
+.btn{padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-primary)}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-primary{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.btn-primary:hover{opacity:0.85}
+.content{flex:1;overflow-y:auto;padding:20px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.kpi-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px 16px}
+.kpi-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:6px}
+.kpi-value{font-size:22px;font-weight:500}
+.kpi-sub{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.kpi-green{color:#3B6D11}.kpi-orange{color:#BA7517}.kpi-red{color:#A32D2D}.kpi-blue{color:#185FA5}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:16px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-title{font-size:14px;font-weight:500}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 10px;font-weight:500;font-size:11px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);text-transform:uppercase;letter-spacing:0.3px}
+td{padding:9px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--color-background-secondary)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-green{background:#EAF3DE;color:#27500A}
+.badge-orange{background:#FAEEDA;color:#633806}
+.badge-red{background:#FCEBEB;color:#501313}
+.badge-blue{background:#E6F1FB;color:#0C447C}
+.badge-gray{background:#F1EFE8;color:#444441}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px;min-width:0}
+.form-group.full-span{grid-column:1/-1}
+.form-group label{font-size:12px;font-weight:500;color:var(--color-text-secondary)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.form-group textarea{resize:vertical;min-height:70px}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--color-border-info);box-shadow:0 0 0 3px rgba(24,95,165,0.12)}
+.form-actions{display:flex;gap:8px;justify-content:flex-end;padding:16px 20px;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ai-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:14px;margin-top:14px}
+.ai-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ai-response{font-size:13px;line-height:1.6;color:var(--color-text-primary);white-space:pre-wrap}
+.ai-input-row{display:flex;gap:8px;margin-top:10px}
+.ai-input-row input{flex:1;padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.tab-row{display:flex;gap:2px;margin-bottom:16px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tab{padding:8px 14px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-0.5px}
+.tab.active{color:var(--color-text-info);border-bottom-color:var(--color-border-info);font-weight:500}
+.aging-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;margin-top:4px}
+.aging-seg{height:100%;border-radius:2px}
+.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);width:min(760px,calc(100vw - 24px));max-height:min(88vh,860px);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 18px 50px rgba(17,24,39,0.18)}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.modal-body{padding:18px 20px 20px;overflow-y:auto}
+.modal-title{font-size:18px;font-weight:600;color:var(--color-text-primary);line-height:1.2}
+.modal-subtitle{font-size:12px;color:var(--color-text-secondary);margin-top:4px}
+.entry-note{padding:12px 14px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:12px;color:var(--color-text-secondary);margin-bottom:18px;line-height:1.5}
+.close-btn{cursor:pointer;font-size:22px;line-height:1;color:var(--color-text-secondary);background:none;border:none;padding:2px 4px}
+.close-btn:hover{color:var(--color-text-primary)}
+.alert{padding:10px 14px;border-radius:var(--border-radius-md);font-size:13px;margin-bottom:12px}
+.alert-success{background:#EAF3DE;color:#27500A;border:0.5px solid #C0DD97}
+.alert-warning{background:#FAEEDA;color:#633806;border:0.5px solid #FAC775}
+.empty-state{text-align:center;padding:40px 20px;color:var(--color-text-secondary)}
+.progress-bar{height:4px;background:var(--color-border-tertiary);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;background:#185FA5;transition:width 0.3s}
+@media (max-width:768px){
+  .sidebar{display:none}
+  .content{padding:14px}
+  .kpi-grid,.two-col,.form-grid{grid-template-columns:1fr}
+  .topbar{padding:12px 14px}
+  .topbar-right{gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .modal-header,.modal-body,.form-actions{padding-left:14px;padding-right:14px}
+  .form-actions{flex-direction:column-reverse}
+  .form-actions .btn{width:100%}
+}
+</style>
+
+<style>
+/* Professional visual upgrade overrides */
+:root{
+  --font-sans:"Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --color-text-primary:#0f172a;
+  --color-text-secondary:#475569;
+  --color-text-tertiary:#64748b;
+  --color-text-info:#ffffff;
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f7fafc;
+  --color-background-tertiary:#eef3f8;
+  --color-background-info:#0f4c81;
+  --color-border-secondary:#cbd5e1;
+  --color-border-tertiary:#e2e8f0;
+  --color-border-info:#0f4c81;
+  --border-radius-md:12px;
+  --border-radius-lg:18px;
+}
+
+body{
+  background:
+    radial-gradient(circle at 8% 10%, #dbeafe 0%, transparent 28%),
+    radial-gradient(circle at 92% 88%, #dcfce7 0%, transparent 26%),
+    var(--color-background-tertiary);
+}
+
+.app{
+  padding:14px;
+  height:100vh;
+  gap:14px;
+}
+
+.sidebar,
+.main{
+  border:1px solid var(--color-border-tertiary);
+  border-radius:18px;
+  box-shadow:0 10px 28px rgba(15, 23, 42, 0.05);
+}
+
+.sidebar{
+  border-right:1px solid var(--color-border-tertiary);
+}
+
+.logo{
+  padding:18px 16px;
+  background:linear-gradient(140deg, #0f4c81 0%, #16619f 100%);
+  border-bottom:0;
+}
+
+.logo-title,
+.logo-sub{
+  color:#eff6ff;
+}
+
+.logo-title{
+  font-weight:600;
+  letter-spacing:0.2px;
+}
+
+.logo-sub{
+  opacity:0.9;
+}
+
+.nav-item{
+  border-left:0;
+  border-radius:10px;
+  margin:2px 8px;
+  padding:8px 10px;
+}
+
+.nav-item.active{
+  background:linear-gradient(140deg, #0f4c81 0%, #16619f 100%);
+  border-left:0;
+}
+
+.nav-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:#e2e8f0;
+  color:#0f4c81;
+  font-size:11px;
+  font-weight:600;
+}
+
+.nav-item.active .nav-icon{
+  background:rgba(255,255,255,0.22);
+  color:#ffffff;
+}
+
+.topbar{
+  border-bottom:1px solid var(--color-border-tertiary);
+  padding:14px 20px;
+}
+
+.page-title{
+  font-size:18px;
+  font-weight:650;
+  letter-spacing:0.2px;
+}
+
+.btn{
+  border:1px solid var(--color-border-secondary);
+  font-weight:600;
+}
+
+.btn-primary{
+  background:linear-gradient(140deg, #0f4c81 0%, #16619f 100%);
+}
+
+.content{
+  padding:20px;
+}
+
+.kpi-card{
+  background:#ffffff;
+  border:1px solid var(--color-border-tertiary);
+  box-shadow:0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.card{
+  border:1px solid var(--color-border-tertiary);
+  box-shadow:0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+th{
+  font-weight:600;
+}
+
+td{
+  color:#1e293b;
+}
+
+.modal{
+  border:1px solid var(--color-border-tertiary);
+  box-shadow:0 20px 48px rgba(15, 23, 42, 0.2);
+}
+
+@media (max-width:768px){
+  .app{padding:0;gap:0}
+  .main{border-radius:0;border-left:0;border-right:0;border-bottom:0}
+}
+</style>
+
+<div class="app" id="app">
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-title">Phoenix Plants</div>
+    <div class="logo-sub">Lifesaver Pvt. Ltd.</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Overview</div>
+    <div class="nav-item active" onclick="nav('dashboard')"><span class="nav-icon">DB</span>Dashboard</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Sales</div>
+    <div class="nav-item" onclick="nav('orders')"><span class="nav-icon">OR</span>Orders</div>
+    <div class="nav-item" onclick="nav('dispatch')"><span class="nav-icon">DP</span>Dispatch</div>
+    <div class="nav-item" onclick="nav('delivery')"><span class="nav-icon">DL</span>Delivery Proof</div>
+    <div class="nav-item" onclick="nav('payments')"><span class="nav-icon">PM</span>Payments</div>
+    <div class="nav-item" onclick="nav('receipts')"><span class="nav-icon">RH</span>Receipt History</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Recovery</div>
+    <div class="nav-item" onclick="nav('recovery')"><span class="nav-icon">RC</span>Recovery Aging</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Masters</div>
+    <div class="nav-item" onclick="nav('dealers')"><span class="nav-icon">DE</span>Dealers</div>
+    <div class="nav-item" onclick="nav('employees')"><span class="nav-icon">EM</span>Employees</div>
+    <div class="nav-item" onclick="nav('products')"><span class="nav-icon">PR</span>Products</div>
+    <div class="nav-item" onclick="nav('transporters')"><span class="nav-icon">TR</span>Transporters</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Inventory</div>
+    <div class="nav-item" onclick="nav('stock')"><span class="nav-icon">ST</span>Stock</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">AI Assistant</div>
+    <div class="nav-item" onclick="nav('ai')"><span class="nav-icon">AI</span>AI CRM Assistant</div>
+  </div>
+</div>
+<div class="main">
+  <div class="topbar">
+    <div class="page-title" id="page-title">Dashboard</div>
+    <div class="topbar-right">
+      <select id="month-filter" class="topbar-select" onchange="onTopbarFilterChange()"></select>
+      <select id="year-filter" class="topbar-select" onchange="onTopbarFilterChange()"></select>
+      <button class="btn btn-primary" id="add-btn" onclick="openAddModal()">+ New Entry</button>
+    </div>
+  </div>
+  <div class="content" id="content"></div>
+</div>
+</div>
+
+<script>
+const DB = {
+  orders:[
+    {id:1,date:'2026-03-07',dealer:'Nahar Pacs Ltd.',dealerId:'Jha001',rdm:'Mr. Jagmohan Solanki',product:'NPK 18:28:10',qty:1800,rate:1370,amount:2466000,payType:'Credit',dueDate:'2026-10-03',payStatus:'Pending',orderStatus:'Pending',notes:'ASAP',received:0,outstanding:0,deliveredQty:0,pendingQty:1800},
+    {id:2,date:'2026-02-11',dealer:'Palwal Pacs Ltd.',dealerId:'Pal001',rdm:'Mr. Varun Singh Tomar',product:'NPK 18:28:10',qty:1400,rate:1370,amount:1918000,payType:'Credit',dueDate:'2026-02-14',payStatus:'Due',orderStatus:'Partially Delivered',notes:'ASAP',received:0,outstanding:1096000,deliveredQty:800,pendingQty:600},
+    {id:3,date:'2026-02-26',dealer:'THE JATAULI PACS',dealerId:'Pal003',rdm:'Mr. Varun Singh Tomar',product:'NPK 18:28:10',qty:600,rate:1370,amount:822000,payType:'Credit',dueDate:'2026-08-03',payStatus:'Paid',orderStatus:'Delivered',notes:'ASAP',received:822000,outstanding:0,deliveredQty:600,pendingQty:0},
+    {id:4,date:'2026-03-06',dealer:'S P MAJRI AT PACS',dealerId:'Pal002',rdm:'Mr. Varun Singh Tomar',product:'NPK 22:22:11',qty:600,rate:1180,amount:708000,payType:'Credit',dueDate:'2026-08-03',payStatus:'Paid',orderStatus:'Delivered',notes:'ASAP',received:732000,outstanding:0,deliveredQty:600,pendingQty:0},
+    {id:5,date:'2026-01-01',dealer:'The Bata Pacs Ltd.',dealerId:'Pal004',rdm:'Mr. Varun Singh Tomar',product:'Complete Dose',qty:100,rate:560,amount:56000,payType:'Credit',dueDate:'2026-04-01',payStatus:'Pending',orderStatus:'Pending',notes:'ASAP',received:0,outstanding:0,deliveredQty:0,pendingQty:100},
+    {id:6,date:'2026-02-16',dealer:'The Chhaisa Pacs Ltd.',dealerId:'Pal005',rdm:'Mr. Varun Singh Tomar',product:'NPK 18:28:10',qty:1200,rate:1370,amount:1644000,payType:'Credit',dueDate:'2026-03-15',payStatus:'Pending',orderStatus:'Pending',notes:'ASAP',received:0,outstanding:0,deliveredQty:0,pendingQty:1200},
+    {id:7,date:'2026-02-18',dealer:'The Jawan Pacs Ltd.',dealerId:'Pal006',rdm:'Mr. Varun Singh Tomar',product:'NPK 18:28:10',qty:1200,rate:1370,amount:1644000,payType:'Credit',dueDate:'2026-01-04',payStatus:'Pending',orderStatus:'Pending',notes:'ASAP',received:0,outstanding:0,deliveredQty:0,pendingQty:1200},
+    {id:8,date:'2026-02-21',dealer:'The Motla Kalan Pacs',dealerId:'Jha002',rdm:'Mr. Jagmohan Solanki',product:'NPK 18:28:10',qty:600,rate:1370,amount:822000,payType:'Credit',dueDate:'2026-02-24',payStatus:'Pending',orderStatus:'Pending',notes:'ASAP',received:0,outstanding:0,deliveredQty:0,pendingQty:600},
+    {id:9,date:'2026-02-21',dealer:'Kosli & Bhakli Pacs Ltd.',dealerId:'Jha003',rdm:'Mr. Jagmohan Solanki',product:'NPK 18:28:10',qty:1200,rate:1370,amount:1644000,payType:'Credit',dueDate:'2026-02-24',payStatus:'Pending',orderStatus:'Pending',notes:'ASAP',received:0,outstanding:0,deliveredQty:0,pendingQty:1200},
+    {id:10,date:'2026-02-26',dealer:'Shubham Rana.',dealerId:'Jha008',rdm:'Mr. Jagmohan Solanki',product:'NPK 18:28:10',qty:1200,rate:1370,amount:1644000,payType:'Credit',dueDate:'2026-02-24',payStatus:'Pending',orderStatus:'Pending',notes:'ASAP',received:0,outstanding:0,deliveredQty:0,pendingQty:1200},
+  ],
+  dispatch:[
+    {invoice:302,orderId:2,date:'2026-03-07',status:'Partially Delivered',vehicle:'UP15DT7318',qty:800,transporter:'Katariya Transport',driver:'Askar',driverPhone:'9389215284',lr:465,eway:'372203311',remarks:'Dispatch On GURUGRAM'},
+    {invoice:303,orderId:3,date:'2026-03-07',status:'Delivered',vehicle:'RJ11GB7871',qty:600,transporter:'Katariya Transport',driver:'Sadam khan',driverPhone:'6350413798',lr:463,eway:'322203211',remarks:'Dispatch On GURUGRAM'},
+    {invoice:304,orderId:4,date:'2026-02-23',status:'Delivered',vehicle:'UP15DT7318',qty:600,transporter:'Katariya Transport',driver:'Askar',driverPhone:'9389215284',lr:461,eway:'',remarks:''},
+  ],
+  payments:[
+    {id:1,orderId:4,dealer:'S P MAJRI AT PACS',amount:732000,mode:'NEFT/RTGS',date:'2026-03-03',ref:'71712810001',status:'Paid',notes:'Paid By NEFT',rdm:'Mr. Varun Singh Tomar',incentive:17019},
+    {id:2,orderId:3,dealer:'THE JATAULI PACS',amount:822000,mode:'NEFT/RTGS',date:'2026-03-16',ref:'4698336044307',status:'Paid',notes:'Paid By RTGS',rdm:'Mr. Varun Singh Tomar',incentive:19111.5},
+    {id:3,orderId:15,dealer:'The Akoda Pacs',amount:1644010,mode:'NEFT/RTGS',date:'2026-03-16',ref:'4698335044308',status:'Paid',notes:'Paid By RTGS',rdm:'Mr. Vipin Mourya',incentive:38223.23},
+    {id:4,orderId:17,dealer:'The Sihma Pacs Ltd.',amount:822000,mode:'RTGS',date:'2026-03-18',ref:'UTIBR72026031800',status:'Paid',notes:'Paid By RTGS',rdm:'Mr. Vipin Mourya',incentive:19111.5},
+    {id:5,orderId:18,dealer:'The Sihma Pacs Ltd.',amount:822000,mode:'RTGS',date:'2026-03-26',ref:'DR/RTGS/SDC39614/',status:'Paid',notes:'Paid By RTGS',rdm:'Mr. Vipin Mourya',incentive:19111.5},
+    {id:6,orderId:22,dealer:'Kishan Sewa Co-op MPacs',amount:216000,mode:'RTGS',date:'2026-03-26',ref:'UTR PUNBR52026032715',status:'Paid',notes:'Paid by RTGS',rdm:'Mr. Ashok Kumar Ji',incentive:5022},
+  ],
+  delivery:[
+    {id:1,orderId:2,dispatchInvoice:302,dealer:'Palwal Pacs Ltd.',deliveredQty:800,date:'2026-03-10',receiver:'Ram Singh',proofUrl:'https://drive.google.com/delivery_proof_2.png',status:'Verified',remarks:'Received in good condition'},
+  ],
+  dealers:[
+    {id:'Jha001',name:'Nahar Pacs Ltd.',phone:'8813914232',address:'Nahar Rewari',district:'Rewari',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Pal001',name:'Palwal Pacs Ltd.',phone:'9729307700',address:'Palwal Haryana',district:'Palwal',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Pal002',name:'S P MAJRI AT PACS',phone:'9991114417',address:'S P MAJRI GURUGRAM',district:'GURUGRAM',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Pal003',name:'THE JATAULI PACS',phone:'9991829411',address:'HAILY MANDI GURUGRAM',district:'GURUGRAM',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Pal004',name:'The Bata Pacs Ltd.',phone:'9896531945',address:'Bata, Palwal, Hayana',district:'Palwal',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Pal005',name:'The Chhaisa Pacs Ltd.',phone:'9813538131',address:'Chhaisa Palwal Haryana',district:'Palwal',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Pal006',name:'The Jawan Pacs Ltd.',phone:'9671723000',address:'Jawan, Near Shiv Mandir, 121004',district:'Palwal',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Jha002',name:'The Motla Kalan Pacs',phone:'9416904755',address:'Motla Kalan Jhajjar Hr',district:'Jhajjar',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Jha003',name:'Kosli & Bhakli Pacs Ltd.',phone:'8814900542',address:'VPO Bakli, Jhajjar Hr',district:'Jhajjar',state:'HARYANA',credit:20000000,active:'Y'},
+    {id:'Jha004',name:'Musepur Pacs Ltd.',phone:'9991672850',address:'Musepur Jhajjar Hr',district:'Jhajjar',state:'HARYANA',credit:20000000,active:'Y'},
+  ],
+  employees:[
+    {id:'Emp001',name:'Mr. Varun Singh Tomar',role:'RDM',phone:'8858365791',region:'Palwal/Faridabad/Gurugram',zm:'Mr. Mohan Singh',active:'Y'},
+    {id:'Emp002',name:'Mr. Jagmohan Solanki',role:'RDM',phone:'9084216380',region:'Jhajjar/Rewari',zm:'Mr. Mohan Singh',active:'Y'},
+    {id:'Emp003',name:'Mr. Vikrant Choudhary',role:'ZM',phone:'8430004525',region:'Kurkshetra, Yamuna Nagar, Ambala',zm:'Mr. Vatan Baliyan',active:'Y'},
+    {id:'Emp004',name:'Mr. Ashok Kumar Ji',role:'RDM',phone:'9813022250',region:'Jind, Hissar, Jind',zm:'Mr. Subham Rana',active:'Y'},
+    {id:'Emp005',name:'Mr. Amit Ahlawat',role:'RDM',phone:'9760966920',region:'Ambala, Yamuna Nagar',zm:'Mr. Vikrant Choudhary',active:'Y'},
+    {id:'Emp006',name:'Mr. Vipin Mourya',role:'RDM',phone:'7518893672',region:'Mahendragarh, Rewari',zm:'Mr. Mohit Vaidwan',active:'Y'},
+  ],
+  products:[
+    {id:'Pro001',name:'NPK 18:28:10',category:'Primary Fertilizer',unit:'Bags',mrp:1450,rate:1370,gst:5,active:'Y'},
+    {id:'Pro002',name:'Complete Dose',category:'Advance Fertilizers',unit:'Bucket',mrp:750,rate:560,gst:5,active:'Y'},
+    {id:'Pro003',name:'NPK 22:22:11',category:'Primary Fertilizer',unit:'Bags',mrp:1280,rate:1180,gst:5,active:'Y'},
+    {id:'Pro004',name:'Phino-Potash',category:'Primary Fertilizer',unit:'Bags',mrp:550,rate:450,gst:5,active:'Y'},
+  ],
+  transporters:[
+    {id:'KT001',name:'Katariya Transport',phone:'9837790000',city:'Meerut',notes:'Meerut Uttar Pradesh',active:'Y'},
+    {id:'SBT002',name:'Shiv Baba Transport',phone:'9917709000',city:'Meerut',notes:'Meerut, Kankar Khera, UP',active:'Y'},
+    {id:'OM004',name:'Om Carrier Transport',phone:'9350581000',city:'Muzaffar Nagar',notes:'Muzaffar Nagar Uttar Pradesh',active:'Y'},
+    {id:'Self',name:'Phoenix Transport',phone:'9917586000',city:'Muzaffar Nagar',notes:'Self',active:'Y'},
+  ],
+  recovery:[
+    {dealer:'Palwal Pacs Ltd.',phone:'9729307700',totalDue:1096000,notDue:0,d0_7:0,d8_15:0,d16_30:0,d31plus:1096000,reminderType:'Final Reminder',reminderStatus:'Not Sent'},
+    {dealer:'The Phalahawas Pacs',phone:'',totalDue:1644000,notDue:0,d0_7:0,d8_15:0,d16_30:0,d31plus:1644000,reminderType:'Final Reminder',reminderStatus:'Not Sent'},
+    {dealer:'Palwal Pacs Ltd.',phone:'9729307700',totalDue:1096000,notDue:0,d0_7:0,d8_15:0,d16_30:0,d31plus:1096000,reminderType:'Final Reminder',reminderStatus:'Not Sent'},
+    {dealer:'The Sehlang M-Pacs',phone:'',totalDue:822000,notDue:0,d0_7:0,d8_15:0,d16_30:0,d31plus:822000,reminderType:'1st Reminder',reminderStatus:'Not Sent'},
+    {dealer:'The Khatoti Kalan Pacs Ltd.',phone:'',totalDue:822000,notDue:0,d0_7:0,d8_15:0,d16_30:0,d31plus:822000,reminderType:'1st Reminder',reminderStatus:'Not Sent'},
+  ],
+  chatHistory:[]
+};
+
+const APP_CONFIG = {
+  apiSaveUrl:'/api/save',
+  whatsappOwner:'+918126354387',
+  apiCandidates:[
+    '/api/save',
+    'localhost.php?api=save',
+    'http://127.0.0.1/localhost.php?api=save',
+    'http://localhost/localhost.php?api=save',
+    'http://127.0.0.1/crm/localhost.php?api=save',
+    'http://localhost/crm/localhost.php?api=save'
+  ]
+};
+let resolvedApiSaveUrl = null;
+let resolvedBootstrapUrl = null;
+const STORAGE_KEY = 'phoenix_plants_crm_state_v1';
+const SESSION_STORAGE_KEY = 'phoenix_plants_crm_state_session_v1';
+
+function persistState(){
+  const payload = JSON.stringify({
+    orders: DB.orders,
+    dispatch: DB.dispatch,
+    payments: DB.payments,
+    delivery: DB.delivery,
+    dealers: DB.dealers,
+    employees: DB.employees,
+    products: DB.products,
+    transporters: DB.transporters,
+    recovery: DB.recovery,
+  });
+  try {
+    localStorage.setItem(STORAGE_KEY, payload);
+    sessionStorage.setItem(SESSION_STORAGE_KEY, payload);
+  } catch (_err) {
+    try {
+      sessionStorage.setItem(SESSION_STORAGE_KEY, payload);
+    } catch (_err2) {
+      console.warn('Unable to persist CRM state to browser storage.');
+    }
+  }
+}
+
+function restoreState(){
+  try {
+    let raw = null;
+    try {
+      raw = localStorage.getItem(STORAGE_KEY);
+    } catch (_err) {
+      raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
+    }
+    if (!raw) { 
+      console.log('No saved state in browser storage. Keeping default data.');
+      return; 
+    }
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') { return; }
+    ['orders','dispatch','payments','delivery','dealers','employees','products','transporters','recovery'].forEach((key)=>{
+      if (Array.isArray(parsed[key]) && parsed[key].length > 0) {
+        DB[key] = parsed[key];
+      }
+    });
+  } catch (_err) {
+    console.warn('Unable to restore CRM state from browser storage.', _err);
+  }
+}
+
+function getRuntimeApiCandidates(){
+  const origin=window.location.origin;
+  const path=window.location.pathname || '/';
+  const dir=path.includes('/') ? path.substring(0,path.lastIndexOf('/')) : '';
+  const fromCurrentDir=[
+    `${origin}${dir}/localhost.php?api=save`,
+    `${origin}/localhost.php?api=save`,
+  ];
+  const rootDir=(dir.split('/').filter(Boolean)[0]||'').trim();
+  const fromRootDir=rootDir ? [
+    `http://127.0.0.1/${rootDir}/localhost.php?api=save`,
+    `http://localhost/${rootDir}/localhost.php?api=save`,
+  ] : [];
+  return [...fromCurrentDir, ...fromRootDir];
+}
+
+async function resolveWorkingBootstrapUrl(){
+  if(resolvedBootstrapUrl){ return resolvedBootstrapUrl; }
+  const candidates=[...new Set([APP_CONFIG.apiSaveUrl,...getRuntimeApiCandidates(),...APP_CONFIG.apiCandidates])];
+  for(const saveUrl of candidates){
+    const bootstrapUrl=saveUrl.replace('api=save','api=bootstrap');
+    try{
+      const res=await fetch(bootstrapUrl,{method:'GET'});
+      if(!res.ok){ continue; }
+      const contentType=res.headers.get('content-type')||'';
+      if(!contentType.includes('application/json')){ continue; }
+      const data=await res.json();
+      if(data?.ok && data?.data){
+        resolvedBootstrapUrl=bootstrapUrl;
+        resolvedApiSaveUrl=saveUrl;
+        return bootstrapUrl;
+      }
+    }catch(_e){}
+  }
+  return null;
+}
+
+async function syncDbToUi(){
+  const bootstrapUrl=await resolveWorkingBootstrapUrl();
+  if(!bootstrapUrl){ return; }
+  try{
+    const res=await fetch(bootstrapUrl,{method:'GET'});
+    if(!res.ok){ return; }
+    const payload=await res.json();
+    if(!payload?.ok || !payload?.data){ return; }
+    const data=payload.data;
+    ['orders','dispatch','payments','delivery','dealers','employees','products','transporters','recovery'].forEach((key)=>{
+      if(Array.isArray(data[key])) DB[key]=data[key];
+    });
+    sanitizeDbTextFields();
+  }catch(_e){}
+}
+
+let currentPage='dashboard';
+let modalOpen=false;
+const MONTH_NAMES=['All Months','January','February','March','April','May','June','July','August','September','October','November','December'];
+const filterState={month:'all',year:'all'};
+
+function fmt(n){return '\u20B9'+Number(n).toLocaleString('en-IN')}
+function fmtNum(n){return Number(n).toLocaleString('en-IN')}
+
+function parseDateParts(value){
+  const raw=String(value||'').trim();
+  const m=raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(m){
+    return {year:Number(m[1]),month:Number(m[2]),day:Number(m[3])};
+  }
+  return null;
+}
+
+function filterByMonthYear(rows,dateKey='date'){
+  return rows.filter((row)=>{
+    const p=parseDateParts(row?.[dateKey]);
+    if(!p){ return false; }
+    const monthOk=filterState.month==='all' || p.month===Number(filterState.month);
+    const yearOk=filterState.year==='all' || p.year===Number(filterState.year);
+    return monthOk && yearOk;
+  });
+}
+
+function getFilteredOrders(){ return filterByMonthYear(DB.orders,'date'); }
+function getFilteredDispatch(){ return filterByMonthYear(DB.dispatch,'date'); }
+function getFilteredDelivery(){ return filterByMonthYear(DB.delivery,'date'); }
+function getFilteredPayments(){ return filterByMonthYear(DB.payments,'date'); }
+
+function getAvailableYears(){
+  const years=new Set();
+  [DB.orders,DB.dispatch,DB.delivery,DB.payments].forEach((list)=>{
+    list.forEach((item)=>{
+      const p=parseDateParts(item?.date);
+      if(p){ years.add(p.year); }
+    });
+  });
+  if(!years.size){ years.add(new Date().getFullYear()); }
+  return Array.from(years).sort((a,b)=>b-a);
+}
+
+function refreshTopbarFilters(){
+  const monthEl=document.getElementById('month-filter');
+  const yearEl=document.getElementById('year-filter');
+  if(!monthEl || !yearEl){ return; }
+  monthEl.innerHTML=MONTH_NAMES.map((name,i)=>`<option value="${i===0?'all':i}" ${String(filterState.month)===String(i===0?'all':i)?'selected':''}>${name}</option>`).join('');
+  const years=getAvailableYears();
+  yearEl.innerHTML=`<option value="all" ${filterState.year==='all'?'selected':''}>All Years</option>${years.map((y)=>`<option value="${y}" ${String(filterState.year)===String(y)?'selected':''}>${y}</option>`).join('')}`;
+}
+
+function onTopbarFilterChange(){
+  const monthEl=document.getElementById('month-filter');
+  const yearEl=document.getElementById('year-filter');
+  filterState.month=monthEl?.value||'all';
+  filterState.year=yearEl?.value||'all';
+  render();
+}
+
+function doesEntryMatchCurrentFilter(entryDate){
+  const p=parseDateParts(entryDate);
+  if(!p){ return true; }
+  const monthOk=filterState.month==='all' || p.month===Number(filterState.month);
+  const yearOk=filterState.year==='all' || p.year===Number(filterState.year);
+  return monthOk && yearOk;
+}
+
+function statusBadge(s){
+  const m={Paid:'badge-green',Due:'badge-red',Pending:'badge-orange',Partial:'badge-orange',Delivered:'badge-green','Partially Delivered':'badge-orange',Dispatched:'badge-blue','Not Sent':'badge-gray','Final Reminder':'badge-red','1st Reminder':'badge-orange',Order:'badge-blue',Dispatch:'badge-orange',Payment:'badge-green',Delivery:'badge-blue'};
+  return `<span class="badge ${m[s]||'badge-gray'}">${s}</span>`;
+}
+
+function normalizePhone(phone){
+  return String(phone||'').replace(/[^\d]/g,'').replace(/^0+/,'');
+}
+
+function openWhatsApp(phone, message){
+  const clean=normalizePhone(phone);
+  if(!clean){
+    alert('Dealer phone number available nahi hai.');
+    return;
+  }
+  const url=`https://wa.me/${clean}?text=${encodeURIComponent(message)}`;
+  window.open(url,'_blank');
+}
+
+function dealerByName(name){
+  return DB.dealers.find(d=>d.name===name);
+}
+
+function escapeHtml(value){
+  return String(value ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+function cleanInjectedText(value){
+  const v=String(value ?? '');
+  if(/save\(form,item\)|dispatch:\{|render:data=>|getModalConfig\(/i.test(v)){ return ''; }
+  return v.replace(/\$\{[^}]*\}/g,'').trim();
+}
+
+function sanitizeDbTextFields(){
+  DB.orders.forEach((o)=>{ o.notes=cleanInjectedText(o.notes); });
+  DB.dispatch.forEach((d)=>{
+    d.vehicle=cleanInjectedText(d.vehicle);
+    d.driver=cleanInjectedText(d.driver);
+    d.driverPhone=cleanInjectedText(d.driverPhone);
+    d.lr=cleanInjectedText(d.lr);
+    d.eway=cleanInjectedText(d.eway);
+    d.remarks=cleanInjectedText(d.remarks);
+  });
+  DB.payments.forEach((p)=>{ p.notes=cleanInjectedText(p.notes); p.ref=cleanInjectedText(p.ref); });
+  DB.delivery.forEach((d)=>{ d.receiver=cleanInjectedText(d.receiver); d.proofUrl=cleanInjectedText(d.proofUrl); d.remarks=cleanInjectedText(d.remarks); });
+}
+
+function sendOrderReceipt(orderId){
+  const order=DB.orders.find(o=>o.id===Number(orderId));
+  if(!order){ return; }
+  const dealer=dealerByName(order.dealer);
+  const msg=`Phoenix Plants Order Receipt%0AOrder #${order.id}%0ADealer: ${order.dealer}%0AProduct: ${order.product}%0AQty: ${order.qty}%0AAmount: ${fmt(order.amount)}%0ADate: ${order.date}%0AFrom: ${APP_CONFIG.whatsappOwner}`;
+  openWhatsApp(dealer?.phone,msg.replace(/%0A/g,'\n'));
+}
+
+function sendDispatchReceipt(invoice){
+  const item=DB.dispatch.find(d=>String(d.invoice)===String(invoice));
+  if(!item){ return; }
+  const order=DB.orders.find(o=>o.id===Number(item.orderId));
+  const dealer=order?dealerByName(order.dealer):null;
+  const msg=`Phoenix Plants Dispatch Receipt\nInvoice: ${item.invoice}\nOrder: #${item.orderId}\nVehicle: ${item.vehicle}\nQty: ${item.qty}\nDate: ${item.date}\nTransporter: ${item.transporter}\nFrom: ${APP_CONFIG.whatsappOwner}`;
+  openWhatsApp(dealer?.phone,msg);
+}
+
+function sendPaymentReceipt(paymentId){
+  const p=DB.payments.find(item=>Number(item.id)===Number(paymentId));
+  if(!p){ return; }
+  const dealer=dealerByName(p.dealer);
+  const msg=`Phoenix Plants Payment Receipt\nPayment ID: ${p.id}\nOrder: #${p.orderId}\nDealer: ${p.dealer}\nAmount: ${fmt(p.amount)}\nMode: ${p.mode}\nDate: ${p.date}\nRef: ${p.ref}\nFrom: ${APP_CONFIG.whatsappOwner}`;
+  openWhatsApp(dealer?.phone,msg);
+}
+
+function sendDeliveryReceipt(deliveryId){
+  const d=DB.delivery.find(item=>Number(item.id)===Number(deliveryId));
+  if(!d){ return; }
+  const dealer=dealerByName(d.dealer);
+  const msg=`Phoenix Plants Delivery Receipt\nProof ID: ${d.id}\nOrder: #${d.orderId}\nInvoice: ${d.dispatchInvoice}\nDelivered Qty: ${d.deliveredQty}\nDate: ${d.date}\nReceiver: ${d.receiver}\nStatus: ${d.status}\nFrom: ${APP_CONFIG.whatsappOwner}`;
+  openWhatsApp(dealer?.phone,msg);
+}
+
+async function persistToDb(type,payload,mode='add'){
+  const tried=[];
+  const candidates=[...new Set([APP_CONFIG.apiSaveUrl,...getRuntimeApiCandidates(),...APP_CONFIG.apiCandidates])];
+
+  async function resolveWorkingSaveUrl(){
+    if(resolvedApiSaveUrl){ return resolvedApiSaveUrl; }
+    const bootstrap=await resolveWorkingBootstrapUrl();
+    if(bootstrap && resolvedApiSaveUrl){ return resolvedApiSaveUrl; }
+    for(const saveUrl of candidates){
+      const healthUrl=saveUrl.replace('api=save','api=dashboard');
+      try{
+        const res=await fetch(healthUrl,{method:'GET'});
+        if(!res.ok){ continue; }
+        const contentType=res.headers.get('content-type')||'';
+        if(!contentType.includes('application/json')){ continue; }
+        const data=await res.json();
+        if(data && data.ok){
+          resolvedApiSaveUrl=saveUrl;
+          return saveUrl;
+        }
+      }catch(_e){}
+    }
+    return null;
+  }
+
+  const workingUrl=await resolveWorkingSaveUrl();
+  if(!workingUrl){
+    console.warn('No PHP/MySQL backend detected. Saving in UI only.');
+    persistState();
+    return {ok:false,localOnly:true};
+  }
+
+  try{
+    const res=await fetch(workingUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type,mode,payload})
+    });
+    tried.push(`${workingUrl} => ${res.status}`);
+    if(!res.ok){ throw new Error(`HTTP ${res.status}`); }
+    const contentType=res.headers.get('content-type')||'';
+    if(!contentType.includes('application/json')){ throw new Error('Non-JSON response'); }
+    const data=await res.json();
+    if(!data.ok){ throw new Error(data.message||'DB save failed'); }
+    return data;
+  }catch(err){
+    tried.push(`${workingUrl} => ${err?.message||'network error'}`);
+  }
+
+  for(const url of candidates){
+    if(url===workingUrl){ continue; }
+    try{
+      const res=await fetch(url,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({type,mode,payload})
+      });
+      tried.push(`${url} => ${res.status}`);
+      if(!res.ok){ continue; }
+      const contentType=res.headers.get('content-type')||'';
+      if(!contentType.includes('application/json')){ continue; }
+      const data=await res.json();
+      if(data.ok){ return data; }
+    }catch(err){
+      tried.push(`${url} => ${err?.message||'network error'}`);
+    }
+  }
+  console.error('DB save failed. Tried:',tried);
+  alert(`Entry UI me save ho gayi, lekin database save fail hua.\n\nTried:\n${tried.join('\n')}\n\nPHP/MySQL backend run karein aur CRM ko localhost.php?page=crm se open karein.`);
+  return null;
+}
+
+function nav(page){
+  currentPage=page;
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  event&&event.target&&event.target.closest('.nav-item')&&event.target.closest('.nav-item').classList.add('active');
+  const titles={dashboard:'Dashboard',orders:'Orders',dispatch:'Dispatch',delivery:'Delivery Proof',payments:'Payments',receipts:'Receipt History',recovery:'Recovery Aging',dealers:'Dealers',employees:'Employees',products:'Products',transporters:'Transporters',stock:'Stock',ai:'AI CRM Assistant'};
+  document.getElementById('page-title').textContent=titles[page]||page;
+  render();
+}
+
+function render(){
+  const c=document.getElementById('content');
+  const pages={dashboard:renderDashboard,orders:renderOrders,dispatch:renderDispatch,delivery:renderDelivery,payments:renderPayments,receipts:renderReceiptHistory,recovery:renderRecovery,dealers:renderDealers,employees:renderEmployees,products:renderProducts,transporters:renderTransporters,stock:renderStock,ai:renderAI};
+  c.innerHTML=(pages[currentPage]||renderDashboard)();
+  refreshTopbarFilters();
+  if(currentPage==='ai') initAI();
+}
+
+function renderDashboard(){
+  const orderRows=getFilteredOrders();
+  const paymentRows=getFilteredPayments();
+  const totalSales=orderRows.reduce((s,o)=>s+o.amount,0);
+  const totalColl=paymentRows.reduce((s,p)=>s+p.amount,0);
+  const outstanding=orderRows.filter(o=>o.outstanding>0).reduce((s,o)=>s+o.outstanding,0);
+  const pending=orderRows.filter(o=>o.orderStatus==='Pending').length;
+  const recoveryData = DB.recovery || [];
+  const overdueAmt=recoveryData.reduce((s,r)=>s+r.totalDue,0);
+  return `
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-label">Total Orders</div><div class="kpi-value kpi-blue">${orderRows.length}</div><div class="kpi-sub">Pending: ${pending}</div></div>
+  <div class="kpi-card"><div class="kpi-label">Total Sales</div><div class="kpi-value kpi-green">${fmt(totalSales)}</div><div class="kpi-sub">16,700 Bags</div></div>
+  <div class="kpi-card"><div class="kpi-label">Collection</div><div class="kpi-value kpi-blue">${fmt(totalColl)}</div><div class="kpi-sub">${paymentRows.length} payments</div></div>
+  <div class="kpi-card"><div class="kpi-label">Overdue Outstanding</div><div class="kpi-value kpi-red">${fmt(overdueAmt)}</div><div class="kpi-sub">5 dealers</div></div>
+</div>
+<div class="two-col">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Recent Orders</span><button class="btn" onclick="nav('orders')">View All</button></div>
+    <table><tr><th>Dealer</th><th>Product</th><th>Qty</th><th>Status</th></tr>
+    ${orderRows.slice(0,5).map(o=>`<tr><td>${o.dealer.substring(0,18)}</td><td>${o.product}</td><td>${fmtNum(o.qty)}</td><td>${statusBadge(o.orderStatus)}</td></tr>`).join('')}
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Top Overdue Dealers</span><button class="btn" onclick="nav('recovery')">Recovery</button></div>
+    <table><tr><th>Dealer</th><th>Due Amount</th><th>Reminder</th></tr>
+    ${recoveryData.slice(0,5).map(r=>`<tr><td>${r.dealer.substring(0,20)}</td><td style="color:#A32D2D;font-weight:500">${fmt(r.totalDue)}</td><td>${statusBadge(r.reminderType||'Not Sent')}</td></tr>`).join('')}
+    </table>
+  </div>
+</div>
+<div class="two-col">
+  <div class="card">
+    <div class="card-header"><span class="card-title">RDM Performance</span></div>
+    <table><tr><th>RDM</th><th>Orders</th><th>Collection</th></tr>
+    <tr><td>Mr. Varun Singh Tomar</td><td>7</td><td>${fmt(2626000)}</td></tr>
+    <tr><td>Mr. Jagmohan Solanki</td><td>9</td><td>${fmt(1644000)}</td></tr>
+    <tr><td>Mr. Vipin Mourya</td><td>7</td><td>${fmt(5754000)}</td></tr>
+    <tr><td>Mr. Ashok Kumar Ji</td><td>1</td><td>${fmt(216000)}</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Payment Mode Summary</span></div>
+    <table><tr><th>Mode</th><th>Count</th><th>Amount</th></tr>
+    <tr><td>NEFT/RTGS</td><td>3</td><td>${fmt(3198010)}</td></tr>
+    <tr><td>RTGS</td><td>3</td><td>${fmt(1860000)}</td></tr>
+    </table>
+  </div>
+</div>`;
+}
+
+function renderOrders(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">All Orders (${DB.orders.length})</span></div>
+  <table>
+    <tr><th>#</th><th>Date</th><th>Dealer</th><th>RDM</th><th>Product</th><th>Qty</th><th>Amount</th><th>Outstanding</th><th>Pay Status</th><th>Order Status</th></tr>
+    ${DB.orders.map(o=>`<tr>
+      <td>${o.id}</td><td>${o.date}</td><td>${o.dealer}</td><td style="font-size:12px">${o.rdm}</td>
+      <td>${o.product}</td><td>${fmtNum(o.qty)}</td><td>${fmt(o.amount)}</td>
+      <td style="color:${o.outstanding>0?'#A32D2D':'#3B6D11'}">${fmt(o.outstanding)}</td>
+      <td>${statusBadge(o.payStatus)}</td><td>${statusBadge(o.orderStatus)}</td>
+    </tr>`).join('')}
+  </table>
+</div>`;
+}
+
+function renderDispatch(){
+  const rows=getFilteredDispatch();
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Dispatch Records (${rows.length})</span></div>
+  <table>
+    <tr><th>Invoice</th><th>Order ID</th><th>Date</th><th>Status</th><th>Vehicle</th><th>Qty</th><th>Transporter</th><th>Driver</th><th>LR No.</th><th>Remarks</th><th>Action</th></tr>
+    ${rows.map(d=>{
+      return `<tr>
+      <td>${d.invoice}</td><td>#${d.orderId}</td><td>${d.date}</td><td>${statusBadge(d.status)}</td>
+      <td>${d.vehicle}</td><td>${fmtNum(d.qty)}</td><td>${d.transporter}</td><td>${d.driver}<br><span style="font-size:11px;color:var(--color-text-secondary)">${d.driverPhone}</span></td>
+      <td>${d.lr}</td><td style="font-size:12px">${d.remarks||'-'}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('dispatch',d.invoice)} ${renderPrintButton('dispatch',d.invoice)} <button class="btn" style="font-size:11px;padding:4px 8px" onclick="sendDispatchReceipt(${d.invoice})">WhatsApp</button></td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+}
+
+function renderDelivery(){
+  const rows=getFilteredDelivery();
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Delivery Proof Records (${rows.length})</span></div>
+  <table>
+    <tr><th>Proof ID</th><th>Order</th><th>Invoice</th><th>Dealer</th><th>Delivered Qty</th><th>Date</th><th>Receiver</th><th>Status</th><th>Proof Link</th><th>Action</th></tr>
+    ${rows.map(d=>{
+      return `<tr>
+      <td>${d.id}</td>
+      <td>#${d.orderId}</td>
+      <td>${d.dispatchInvoice||'-'}</td>
+      <td>${d.dealer}</td>
+      <td>${fmtNum(d.deliveredQty)}</td>
+      <td>${d.date}</td>
+      <td>${d.receiver||'-'}</td>
+      <td>${statusBadge(d.status)}</td>
+      <td>${d.proofUrl?`<a href="${d.proofUrl}" target="_blank">Open</a>`:'-'}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('delivery',d.id)} ${renderPrintButton('delivery',d.id)} <button class="btn" style="font-size:11px;padding:4px 8px" onclick="sendDeliveryReceipt(${d.id})">WhatsApp</button></td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+}
+
+function renderPayments(){
+  const rows=getFilteredPayments();
+  const total=rows.reduce((s,p)=>s+p.amount,0);
+  const totalIncentive=rows.reduce((s,p)=>s+Number(p.incentive||0),0);
+  return `
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-label">Total Received</div><div class="kpi-value kpi-green">${fmt(total)}</div></div>
+  <div class="kpi-card"><div class="kpi-label">Payments Count</div><div class="kpi-value kpi-blue">${rows.length}</div></div>
+  <div class="kpi-card"><div class="kpi-label">RDM Incentive</div><div class="kpi-value kpi-orange">${fmt(totalIncentive.toFixed(0))}</div></div>
+  <div class="kpi-card"><div class="kpi-label">ZM Incentive</div><div class="kpi-value kpi-orange">${fmt(totalIncentive.toFixed(0))}</div></div>
+</div>
+<div class="card">
+  <div class="card-header"><span class="card-title">Payment Records</span></div>
+  <table>
+    <tr><th>ID</th><th>Order</th><th>Dealer</th><th>Amount</th><th>Mode</th><th>Date</th><th>Reference</th><th>Status</th><th>RDM Incentive</th><th>Action</th></tr>
+    ${rows.map(p=>{
+      return `<tr>
+      <td>${p.id}</td><td>#${p.orderId}</td><td>${p.dealer}</td>
+      <td style="font-weight:500;color:#3B6D11">${fmt(p.amount)}</td>
+      <td><span class="badge badge-blue">${p.mode}</span></td><td>${p.date}</td>
+      <td style="font-size:11px;color:var(--color-text-secondary)">${p.ref}</td>
+      <td>${statusBadge(p.status)}</td>
+      <td>${fmt(p.incentive.toFixed(0))}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('payments',p.id)} ${renderPrintButton('payments',p.id)} <button class="btn" style="font-size:11px;padding:4px 8px" onclick="sendPaymentReceipt(${p.id})">WhatsApp</button></td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+}
+
+function buildReceiptHistory(){
+  const orderRows=getFilteredOrders().map(o=>({
+    type:'Order',
+    ref:`Order #${o.id}`,
+    dealer:o.dealer||'-',
+    date:o.date||'',
+    amount:o.amount||0,
+    action:()=>sendOrderReceipt(o.id)
+  }));
+  const dispatchRows=getFilteredDispatch().map(d=>{
+    const ord=DB.orders.find(o=>Number(o.id)===Number(d.orderId));
+    return {
+      type:'Dispatch',
+      ref:`Invoice ${d.invoice}`,
+      dealer:ord?.dealer||'-',
+      date:d.date||'',
+      amount:0,
+      action:()=>sendDispatchReceipt(d.invoice)
+    };
+  });
+  const paymentRows=getFilteredPayments().map(p=>({
+    type:'Payment',
+    ref:`Payment #${p.id}`,
+    dealer:p.dealer||'-',
+    date:p.date||'',
+    amount:p.amount||0,
+    action:()=>sendPaymentReceipt(p.id)
+  }));
+  const deliveryRows=getFilteredDelivery().map(d=>({
+    type:'Delivery',
+    ref:`Proof #${d.id}`,
+    dealer:d.dealer||'-',
+    date:d.date||'',
+    amount:0,
+    action:()=>sendDeliveryReceipt(d.id)
+  }));
+
+  const parseDate=(v)=>{
+    const t=Date.parse(v||'');
+    return Number.isNaN(t)?0:t;
+  };
+  return [...orderRows,...dispatchRows,...paymentRows,...deliveryRows]
+    .sort((a,b)=>parseDate(b.date)-parseDate(a.date));
+}
+
+function resendReceiptByIndex(idx){
+  const rows=buildReceiptHistory();
+  const row=rows[idx];
+  if(!row){ return; }
+  row.action();
+}
+
+function renderReceiptHistory(){
+  const rows=buildReceiptHistory();
+  const totalReceipts=rows.length;
+  const todayCount=rows.filter(r=>r.date===new Date().toISOString().slice(0,10)).length;
+  const orderRows=getFilteredOrders();
+  const paymentRows=getFilteredPayments();
+
+  return `
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-label">Total Receipts</div><div class="kpi-value kpi-blue">${fmtNum(totalReceipts)}</div><div class="kpi-sub">All categories combined</div></div>
+  <div class="kpi-card"><div class="kpi-label">Today Receipts</div><div class="kpi-value kpi-green">${fmtNum(todayCount)}</div><div class="kpi-sub">Generated today</div></div>
+  <div class="kpi-card"><div class="kpi-label">Order Receipts</div><div class="kpi-value kpi-orange">${fmtNum(orderRows.length)}</div><div class="kpi-sub">One-click resend</div></div>
+  <div class="kpi-card"><div class="kpi-label">Payment Receipts</div><div class="kpi-value kpi-blue">${fmtNum(paymentRows.length)}</div><div class="kpi-sub">One-click resend</div></div>
+</div>
+<div class="card">
+  <div class="card-header"><span class="card-title">Receipt History (Resend on WhatsApp)</span></div>
+  <table>
+    <tr><th>#</th><th>Type</th><th>Reference</th><th>Dealer</th><th>Date</th><th>Amount</th><th>Action</th></tr>
+    ${rows.map((r,i)=>{
+      return `<tr>
+      <td>${i+1}</td>
+      <td>${statusBadge(r.type)}</td>
+      <td>${r.ref}</td>
+      <td>${r.dealer}</td>
+      <td>${r.date||'-'}</td>
+      <td>${r.amount?fmt(r.amount):'-'}</td>
+      <td><button class="btn" style="font-size:11px;padding:4px 8px" onclick="resendReceiptByIndex(${i})">Resend WhatsApp</button></td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+}
+
+function renderRecovery(){
+  return `
+<div class="alert alert-warning">Recovery Aging Report \u20B95,206,000 outstanding overdue hai - immediate follow-up required</div>
+<div class="card">
+  <div class="card-header"><span class="card-title">Recovery Aging Report</span></div>
+  <table>
+    <tr><th>Dealer</th><th>Phone</th><th>Total Due</th><th>0-7 Days</th><th>8-15 Days</th><th>16-30 Days</th><th>31+ Days</th><th>Reminder Type</th><th>Status</th><th>Action</th></tr>
+    ${DB.recovery.map(r=>`<tr>
+      <td style="font-weight:500">${r.dealer}</td>
+      <td style="font-size:12px">${r.phone||'-'}</td>
+      <td style="color:#A32D2D;font-weight:500">${fmt(r.totalDue)}</td>
+      <td>${fmt(r.d0_7)}</td><td>${fmt(r.d8_15)}</td><td>${fmt(r.d16_30)}</td>
+      <td style="color:#A32D2D">${fmt(r.d31plus)}</td>
+      <td>${statusBadge(r.reminderType||'Not Set')}</td>
+      <td>${statusBadge(r.reminderStatus)}</td>
+      <td><button class="btn" style="font-size:11px;padding:4px 8px" onclick="sendReminder('${r.dealer}','${r.phone}',${r.totalDue})">📱 Reminder</button></td>
+    </tr>`).join('')}
+  </table>
+</div>`;
+}
+
+function sendReminder(dealer,phone,amt){
+  const msg=`Dear ${dealer},\nAapka \u20B9${Number(amt).toLocaleString('en-IN')} outstanding payment overdue hai.\nKripya jaldi payment karein.\n\nPhoenix Plants CRM`;
+  openWhatsApp(phone,msg);
+}
+
+function renderDealers(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Dealer Master (${DB.dealers.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Dealer Name</th><th>Phone</th><th>District</th><th>State</th><th>Credit Limit</th><th>Active</th><th>Action</th></tr>
+    ${DB.dealers.map(d=>`<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${d.id}</td>
+      <td style="font-weight:500">${d.name}</td>
+      <td>${d.phone}</td><td>${d.district}</td><td>${d.state}</td>
+      <td>${fmt(d.credit)}</td>
+      <td>${d.active==='Y'?'<span class="badge badge-green">Active</span>':'<span class="badge badge-gray">Inactive</span>'}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('dealers',d.id)} ${renderPrintButton('dealers',d.id)}</td>
+    </tr>`).join('')}
+  </table>
+</div>`;
+}
+
+renderEmployees=function(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Employee Master (${DB.employees.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Role</th><th>Phone</th><th>Region</th><th>Reporting ZM</th><th>Active</th><th>Action</th></tr>
+    ${DB.employees.map(e=>{
+      const roleClass = e.role==='ZM'?'badge-blue':e.role==='RDM'?'badge-green':'badge-orange';
+      const activeStatus = e.active==='Y'?'<span class="badge badge-green">Active</span>':'<span class="badge badge-gray">Inactive</span>';
+      return `<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${e.id}</td>
+      <td style="font-weight:500">${e.name}</td>
+      <td><span class="badge ${roleClass}">${e.role}</span></td>
+      <td>${e.phone}</td>
+      <td style="font-size:12px">${e.region}</td>
+      <td style="font-size:12px">${e.zm}</td>
+      <td>${activeStatus}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('employees',e.id)} ${renderPrintButton('employees',e.id)}</td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+renderProducts=function(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Product Master (${DB.products.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Product Name</th><th>Category</th><th>Unit</th><th>MRP</th><th>Sale Rate</th><th>GST%</th><th>Active</th><th>Action</th></tr>
+    ${DB.products.map(p=>{
+      return `<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${p.id}</td>
+      <td style="font-weight:500">${p.name}</td>
+      <td style="font-size:12px">${p.category}</td>
+      <td>${p.unit}</td>
+      <td>${fmt(p.mrp)}</td>
+      <td style="color:#3B6D11;font-weight:500">${fmt(p.rate)}</td>
+      <td>${p.gst}%</td>
+      <td><span class="badge badge-green">Active</span></td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('products',p.id)} ${renderPrintButton('products',p.id)}</td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+renderTransporters=function(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Transporter Master (${DB.transporters.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Phone</th><th>City</th><th>Notes</th><th>Active</th><th>Action</th></tr>
+    ${DB.transporters.map(t=>{
+      return `<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${t.id}</td>
+      <td style="font-weight:500">${t.name}</td>
+      <td>${t.phone}</td><td>${t.city}</td>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${t.notes}</td>
+      <td><span class="badge badge-green">Active</span></td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('transporters',t.id)} ${renderPrintButton('transporters',t.id)}</td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+function renderStock(){
+  return `
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-label">Opening Stock</div><div class="kpi-value kpi-blue">15,000</div><div class="kpi-sub">NPK 18:28:10 Bags</div></div>
+  <div class="kpi-card"><div class="kpi-label">Total Inward</div><div class="kpi-value kpi-green">8,000</div><div class="kpi-sub">Bags</div></div>
+  <div class="kpi-card"><div class="kpi-label">Total Outward</div><div class="kpi-value kpi-orange">8,600</div><div class="kpi-sub">Bags Dispatched</div></div>
+  <div class="kpi-card"><div class="kpi-label">Current Balance</div><div class="kpi-value kpi-blue">14,400</div><div class="kpi-sub">Bags Available</div></div>
+</div>
+<div class="card">
+  <div class="card-header"><span class="card-title">Stock Ledger</span></div>
+  <table>
+    <tr><th>Txn ID</th><th>Date</th><th>Type</th><th>Ref</th><th>Product</th><th>Qty</th><th>Warehouse</th><th>Notes</th></tr>
+    <tr><td>1</td><td>2026-05-03</td><td><span class="badge badge-orange">Outward</span></td><td>Emp001</td><td>NPK 18:28:10</td><td>-</td><td>Panipat</td><td>Dispatch on Palwal</td></tr>
+  </table>
+  <div style="margin-top:14px">
+    <button class="btn btn-primary" onclick="openAddModal()">+ Add Stock Entry</button>
+  </div>
+</div>`;
+}
+
+function renderAI(){
+  return `
+<div class="card" style="margin-bottom:0">
+  <div class="card-header">
+    <span class="card-title">AI CRM Assistant</span>
+    <span style="font-size:12px;color:var(--color-text-secondary)">Phoenix Plants ka CRM data jaanta hai</span>
+  </div>
+  <div id="chat-messages" style="min-height:300px;max-height:420px;overflow-y:auto;padding:4px 0;margin-bottom:14px">
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:10px;font-size:13px;line-height:1.6">
+      <strong>AI Assistant:</strong> Namaste! Main Phoenix Plants Lifesaver ka CRM AI assistant hoon. Aap mujhse koi bhi sawaal pooch sakte hain:<br><br>
+      - Kisi dealer ka outstanding kya hai?<br>
+      - Kisi order ki status batao<br>
+      - Recovery reminder draft karo<br>
+      - RDM performance analyze karo<br>
+      - Koi bhi CRM related kaam!
+    </div>
+  </div>
+  <div style="border-top:0.5px solid var(--color-border-tertiary);padding-top:12px">
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <button class="btn" style="font-size:12px" onclick="quickAsk('Palwal Pacs Ltd. ka outstanding kya hai?')">Palwal ka outstanding</button>
+      <button class="btn" style="font-size:12px" onclick="quickAsk('Kaunse dealers ka payment overdue hai aur unhe reminder draft karo')">Overdue reminder</button>
+      <button class="btn" style="font-size:12px" onclick="quickAsk('RDM wise performance summary do')">RDM Performance</button>
+      <button class="btn" style="font-size:12px" onclick="quickAsk('Aaj ke pending orders ki list do')">Pending orders</button>
+    </div>
+    <div class="ai-input-row">
+      <input type="text" id="ai-input" placeholder="Apna sawaal type karein..." onkeydown="if(event.key==='Enter')sendAI()">
+      <button class="btn btn-primary" onclick="sendAI()">Send</button>
+    </div>
+    <div id="ai-status" style="font-size:12px;color:var(--color-text-secondary);margin-top:6px;height:16px"></div>
+  </div>
+</div>`;
+}
+
+function initAI(){
+}
+
+function quickAsk(q){
+  document.getElementById('ai-input').value=q;
+  sendAI();
+}
+
+async function sendAI(){
+  const input=document.getElementById('ai-input');
+  const q=input.value.trim();
+  if(!q)return;
+  input.value='';
+  
+  const msgs=document.getElementById('chat-messages');
+  msgs.innerHTML+=`<div style="text-align:right;margin-bottom:10px"><span style="background:var(--color-background-info);color:var(--color-text-info);padding:8px 12px;border-radius:var(--border-radius-md);font-size:13px;display:inline-block;max-width:85%;text-align:left">${q}</span></div>`;
+  
+  const status=document.getElementById('ai-status');
+  status.textContent='AI soch raha hai...';
+  msgs.scrollTop=msgs.scrollHeight;
+
+  const systemPrompt=`Tu Phoenix Plants Lifesaver Pvt. Ltd. ka CRM AI assistant hai. Tu Hindi aur Hinglish mein baat karta hai. 
+Tu is company ka complete data jaanta hai:
+
+COMPANY: Phoenix Plants Lifesaver Pvt. Ltd. (Fertilizer company, Haryana)
+
+ORDERS (${DB.orders.length} total):
+${DB.orders.map(o=>`Order#${o.id}: ${o.dealer}, ${o.product}, Qty:${o.qty}, Amount:\u20B9${o.amount}, Outstanding:\u20B9${o.outstanding}, Status:${o.orderStatus}, PayStatus:${o.payStatus}, DueDate:${o.dueDate}`).join('\n')}
+
+PAYMENTS (${DB.payments.length} total):
+${DB.payments.map(p=>`Pay#${p.id}: ${p.dealer}, \u20B9${p.amount}, ${p.mode}, ${p.date}, Status:${p.status}`).join('\n')}
+
+RECOVERY OVERDUE:
+${DB.recovery.map(r=>`${r.dealer}: Total Due \u20B9${r.totalDue}, 31+days: \u20B9${r.d31plus}, Reminder:${r.reminderType||'Not Set'}`).join('\n')}
+
+DEALERS: ${DB.dealers.map(d=>`${d.name}(${d.id})`).join(', ')}
+PRODUCTS: ${DB.products.map(p=>`${p.name}@\u20B9${p.rate}`).join(', ')}
+EMPLOYEES: ${DB.employees.map(e=>`${e.name}(${e.role})`).join(', ')}
+
+KPIs: Total Sales \u20B92,25,22,000 | Collection \u20B950,58,010 | Outstanding \u20B952,06,000 (all overdue) | Pending Orders: 13
+
+Tu concise aur helpful jawab de. WhatsApp reminder drafts, analysis, summaries sab kar sakta hai. Numbers ko Indian format mein dikhao.`;
+
+  DB.chatHistory.push({role:'user',content:q});
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:systemPrompt,
+        messages:DB.chatHistory
+      })
+    });
+    const data=await res.json();
+    const reply=data.content?.map(b=>b.text||'').join('')||'Kuch error aaya, dobara try karein.';
+    DB.chatHistory.push({role:'assistant',content:reply});
+    
+    msgs.innerHTML+=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:10px;font-size:13px;line-height:1.6;white-space:pre-wrap"><strong>AI Assistant:</strong>\n${reply}</div>`;
+    status.textContent='';
+  }catch(e){
+    msgs.innerHTML+=`<div style="background:#FCEBEB;border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:10px;font-size:13px;color:#501313">Error: API se connect nahi ho pa raha. Internet connection check karein.</div>`;
+    status.textContent='';
+  }
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+let modalContext={mode:'add',page:null,id:null};
+
+function renderEditButton(page,id){
+  return `<button class="btn" style="font-size:11px;padding:4px 8px" onclick="openEditModal('${page}','${id}')">Edit</button>`;
+}
+
+function printEntry(page, id) {
+  const config = getModalConfig(page);
+  if (!config) return;
+  const item = config.get(id);
+  if (!item) return;
+  
+  let title = page.charAt(0).toUpperCase() + page.slice(1);
+  let content = `<h2>${title} - Phoenix Plants Lifesaver Pvt. Ltd.</h2><table style="width:100%; border-collapse:collapse; margin-top:20px;"><tbody>`;
+  
+  Object.keys(item).forEach(key => {
+    const val = item[key];
+    let displayVal = val;
+    if (typeof val === 'number') {
+      displayVal = val > 100000 ? val.toLocaleString('en-IN') : val;
+    }
+    content += `<tr><td style="border:1px solid #ccc; padding:8px; font-weight:bold; width:30%">${key}</td><td style="border:1px solid #ccc; padding:8px">${displayVal}</td></tr>`;
+  });
+  
+  content += `</tbody></table><p style="margin-top:30px; color:#666; font-size:12px">Printed: ${new Date().toLocaleString('en-IN')}</p>`;
+  
+  const printWin = window.open('', '', 'width=900,height=700');
+  printWin.document.write(`<!DOCTYPE html><html><head><title>${title} - Print</title><style>body{font-family:Arial,sans-serif; padding:20px; background:#fff} h2{color:#0f4c81} table{margin-top:20px} td{padding:10px}</style></head><body>${content}</body></html>`);
+  printWin.document.close();
+  setTimeout(() => printWin.print(), 250);
+}
+
+function renderPrintButton(page, id) {
+  return `<button class="btn" style="font-size:11px;padding:4px 8px;background:#f0f4f8;" onclick="printEntry('${page}',${typeof id === 'number' ? id : "'" + id + "'"})" title="Print this entry">Print</button>`;
+}
+
+renderOrders=function(){
+  const rows=getFilteredOrders();
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">All Orders (${rows.length})</span></div>
+  <table>
+    <tr><th>#</th><th>Date</th><th>Dealer</th><th>RDM</th><th>Product</th><th>Qty</th><th>Amount</th><th>Outstanding</th><th>Pay Status</th><th>Order Status</th><th>Action</th></tr>
+    ${rows.map(o=>{
+      const color = o.outstanding>0?'#A32D2D':'#3B6D11';
+      return `<tr>
+      <td>${o.id}</td><td>${o.date}</td><td>${o.dealer}</td><td style="font-size:12px">${o.rdm}</td>
+      <td>${o.product}</td><td>${fmtNum(o.qty)}</td><td>${fmt(o.amount)}</td>
+      <td style="color:${color}">${fmt(o.outstanding)}</td>
+      <td>${statusBadge(o.payStatus)}</td><td>${statusBadge(o.orderStatus)}</td><td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('orders',o.id)} ${renderPrintButton('orders',o.id)} <button class="btn" style="font-size:11px;padding:4px 8px" onclick="sendOrderReceipt(${o.id})">WhatsApp</button></td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+renderDealers=function(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Dealer Master (${DB.dealers.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Dealer Name</th><th>Phone</th><th>District</th><th>State</th><th>Credit Limit</th><th>Active</th><th>Action</th></tr>
+    ${DB.dealers.map(d=>{
+      const activeStatus = d.active==='Y'?'<span class="badge badge-green">Active</span>':'<span class="badge badge-gray">Inactive</span>';
+      return `<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${d.id}</td>
+      <td style="font-weight:500">${d.name}</td>
+      <td>${d.phone}</td><td>${d.district}</td><td>${d.state}</td>
+      <td>${fmt(d.credit)}</td>
+      <td>${activeStatus}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('dealers',d.id)} ${renderPrintButton('dealers',d.id)}</td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+renderEmployees=function(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Employee Master (${DB.employees.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Role</th><th>Phone</th><th>Region</th><th>Reporting ZM</th><th>Active</th><th>Action</th></tr>
+    ${DB.employees.map(e=>{
+      const roleClass = e.role==='ZM'?'badge-blue':e.role==='RDM'?'badge-green':'badge-orange';
+      const activeStatus = e.active==='Y'?'<span class="badge badge-green">Active</span>':'<span class="badge badge-gray">Inactive</span>';
+      return `<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${e.id}</td>
+      <td style="font-weight:500">${e.name}</td>
+      <td><span class="badge ${roleClass}">${e.role}</span></td>
+      <td>${e.phone}</td>
+      <td style="font-size:12px">${e.region}</td>
+      <td style="font-size:12px">${e.zm}</td>
+      <td>${activeStatus}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('employees',e.id)} ${renderPrintButton('employees',e.id)}</td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+renderProducts=function(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Product Master (${DB.products.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Product Name</th><th>Category</th><th>Unit</th><th>MRP</th><th>Sale Rate</th><th>GST%</th><th>Active</th><th>Action</th></tr>
+    ${DB.products.map(p=>{
+      return `<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${p.id}</td>
+      <td style="font-weight:500">${p.name}</td>
+      <td style="font-size:12px">${p.category}</td>
+      <td>${p.unit}</td>
+      <td>${fmt(p.mrp)}</td>
+      <td style="color:#3B6D11;font-weight:500">${fmt(p.rate)}</td>
+      <td>${p.gst}%</td>
+      <td><span class="badge badge-green">Active</span></td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('products',p.id)} ${renderPrintButton('products',p.id)}</td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+renderTransporters=function(){
+  return `
+<div class="card">
+  <div class="card-header"><span class="card-title">Transporter Master (${DB.transporters.length})</span></div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Phone</th><th>City</th><th>Notes</th><th>Active</th><th>Action</th></tr>
+    ${DB.transporters.map(t=>{
+      return `<tr>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${t.id}</td>
+      <td style="font-weight:500">${t.name}</td>
+      <td>${t.phone}</td><td>${t.city}</td>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${t.notes}</td>
+      <td><span class="badge badge-green">Active</span></td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">${renderEditButton('transporters',t.id)} ${renderPrintButton('transporters',t.id)}</td>
+    </tr>`;
+    }).join('')}
+  </table>
+</div>`;
+};
+
+function getModalConfig(page){
+  return {
+    orders:{
+      titleAdd:'New Order', titleEdit:'Edit Order', list:DB.orders,
+      get:id=>DB.orders.find(item=>item.id===id),
+      create:()=>({id:Math.max(0,...DB.orders.map(item=>item.id))+1,date:'2026-04-05',dealer:DB.dealers[0]?.name||'',rdm:DB.employees.find(e=>e.role==='RDM')?.name||'',product:DB.products[0]?.name||'',qty:'',rate:'',amount:0,payType:'Credit',dueDate:'',payStatus:'Pending',orderStatus:'Pending',notes:'',received:0,outstanding:0,deliveredQty:0,pendingQty:0}),
+      render:data=>`<div class="entry-note">Order details update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Dealer</label><select name="dealer">${DB.dealers.map(d=>`<option ${d.name===data.dealer?'selected':''}>${d.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label>RDM</label><select name="rdm">${DB.employees.filter(e=>e.role==='RDM').map(e=>`<option ${e.name===data.rdm?'selected':''}>${e.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label>Product</label><select name="product">${DB.products.map(p=>`<option ${p.name===data.product?'selected':''}>${p.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label>Quantity (Bags)</label><input name="qty" type="number" value="${data.qty ?? ''}" placeholder="0"></div>
+        <div class="form-group"><label>Rate (Rs.)</label><input name="rate" type="number" value="${data.rate ?? ''}" placeholder="1370"></div>
+        <div class="form-group"><label>Order Date</label><input name="date" type="date" value="${escapeHtml(data.date || '2026-04-05')}"></div>
+        <div class="form-group"><label>Credit Due Date</label><input name="dueDate" type="date" value="${escapeHtml(data.dueDate || '')}"></div>
+        <div class="form-group"><label>Payment Type</label><select name="payType"><option ${data.payType==='Credit'?'selected':''}>Credit</option><option ${data.payType==='Cash'?'selected':''}>Cash</option></select></div>
+        <div class="form-group full-span"><label>Notes</label><textarea name="notes" placeholder="ASAP / special instructions...">${escapeHtml(cleanInjectedText(data.notes || ''))}</textarea></div>
+      </div>`,
+      save(form,item){item.dealer=form.get('dealer');item.rdm=form.get('rdm');item.product=form.get('product');item.qty=Number(form.get('qty')||0);item.rate=Number(form.get('rate')||0);item.date=form.get('date');item.dueDate=form.get('dueDate');item.payType=form.get('payType');item.notes=form.get('notes');item.amount=item.qty*item.rate;item.pendingQty=item.qty-(item.deliveredQty||0);}
+    },
+    dispatch:{
+      titleAdd:'New Dispatch', titleEdit:'Edit Dispatch', list:DB.dispatch,
+      get:id=>DB.dispatch.find(item=>String(item.invoice)===String(id)),
+      create:()=>({invoice:Math.max(300,...DB.dispatch.map(item=>Number(item.invoice)||0))+1,orderId:DB.orders[0]?.id||1,date:'2026-04-05',status:'Dispatched',vehicle:'',qty:0,transporter:DB.transporters[0]?.name||'',driver:'',driverPhone:'',lr:'',eway:'',remarks:''}),
+      render:data=>`<div class="entry-note">Dispatch details update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Order ID</label><input name="orderId" type="number" value="${data.orderId ?? ''}" placeholder="1"></div>
+        <div class="form-group"><label>Invoice No.</label><input name="invoice" type="number" value="${data.invoice ?? ''}" placeholder="311"></div>
+        <div class="form-group"><label>Dispatch Date</label><input name="date" type="date" value="${escapeHtml(data.date || '2026-04-05')}"></div>
+        <div class="form-group"><label>Status</label><select name="status"><option ${data.status==='Dispatched'?'selected':''}>Dispatched</option><option ${data.status==='Partially Delivered'?'selected':''}>Partially Delivered</option><option ${data.status==='Delivered'?'selected':''}>Delivered</option></select></div>
+        <div class="form-group"><label>Vehicle No.</label><input name="vehicle" type="text" value="${escapeHtml(cleanInjectedText(data.vehicle || ''))}" placeholder="UP15DT7318"></div>
+        <div class="form-group"><label>Quantity</label><input name="qty" type="number" value="${data.qty ?? ''}" placeholder="600"></div>
+        <div class="form-group"><label>Transporter</label><select name="transporter">${DB.transporters.map(t=>`<option ${t.name===data.transporter?'selected':''}>${t.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label>Driver Name</label><input name="driver" type="text" value="${escapeHtml(cleanInjectedText(data.driver || ''))}" placeholder="Driver name"></div>
+        <div class="form-group"><label>Driver Phone</label><input name="driverPhone" type="text" value="${escapeHtml(cleanInjectedText(data.driverPhone || ''))}" placeholder="9XXXXXXXXX"></div>
+        <div class="form-group"><label>LR Number</label><input name="lr" type="text" value="${escapeHtml(cleanInjectedText(data.lr || ''))}" placeholder="465"></div>
+        <div class="form-group"><label>E-Way Bill</label><input name="eway" type="text" value="${escapeHtml(cleanInjectedText(data.eway || ''))}" placeholder="E-way bill"></div>
+        <div class="form-group full-span"><label>Remarks</label><textarea name="remarks" placeholder="Dispatch notes...">${escapeHtml(cleanInjectedText(data.remarks || ''))}</textarea></div>
+      </div>`,
+      save(form,item){item.orderId=Number(form.get('orderId')||0);item.invoice=Number(form.get('invoice')||0);item.date=form.get('date');item.status=form.get('status');item.vehicle=form.get('vehicle');item.qty=Number(form.get('qty')||0);item.transporter=form.get('transporter');item.driver=form.get('driver');item.driverPhone=form.get('driverPhone');item.lr=form.get('lr');item.eway=form.get('eway');item.remarks=form.get('remarks');}
+    },
+    payments:{
+      titleAdd:'Record Payment', titleEdit:'Edit Payment', list:DB.payments,
+      get:id=>DB.payments.find(item=>Number(item.id)===Number(id)),
+      create:()=>({id:Math.max(0,...DB.payments.map(item=>Number(item.id)||0))+1,orderId:DB.orders[0]?.id||1,dealer:DB.dealers[0]?.name||'',amount:0,mode:'NEFT/RTGS',date:'2026-04-05',ref:'',status:'Paid',notes:'',rdm:DB.employees.find(e=>e.role==='RDM')?.name||'',incentive:0}),
+      render:data=>`<div class="entry-note">Payment details update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Order ID</label><input name="orderId" type="number" value="${data.orderId ?? ''}" placeholder="1"></div>
+        <div class="form-group"><label>Dealer</label><select name="dealer">${DB.dealers.map(d=>`<option ${d.name===data.dealer?'selected':''}>${d.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label>Amount (Rs.)</label><input name="amount" type="number" value="${data.amount ?? ''}" placeholder="0"></div>
+        <div class="form-group"><label>Payment Mode</label><select name="mode"><option ${data.mode==='NEFT/RTGS'?'selected':''}>NEFT/RTGS</option><option ${data.mode==='RTGS'?'selected':''}>RTGS</option><option ${data.mode==='NEFT'?'selected':''}>NEFT</option><option ${data.mode==='Cheque'?'selected':''}>Cheque</option><option ${data.mode==='Cash'?'selected':''}>Cash</option><option ${data.mode==='UPI'?'selected':''}>UPI</option></select></div>
+        <div class="form-group"><label>Payment Date</label><input name="date" type="date" value="${escapeHtml(data.date || '2026-04-05')}"></div>
+        <div class="form-group"><label>Reference No.</label><input name="ref" type="text" value="${escapeHtml(cleanInjectedText(data.ref || ''))}" placeholder="UTR / Transaction ID"></div>
+        <div class="form-group"><label>Status</label><select name="status"><option ${data.status==='Paid'?'selected':''}>Paid</option><option ${data.status==='Pending'?'selected':''}>Pending</option><option ${data.status==='Failed'?'selected':''}>Failed</option></select></div>
+        <div class="form-group"><label>RDM Name</label><select name="rdm">${DB.employees.filter(e=>e.role==='RDM').map(e=>`<option ${e.name===data.rdm?'selected':''}>${e.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label>Incentive</label><input name="incentive" type="number" value="${data.incentive ?? ''}" placeholder="0"></div>
+        <div class="form-group full-span"><label>Notes</label><textarea name="notes" placeholder="Payment remarks...">${escapeHtml(cleanInjectedText(data.notes || ''))}</textarea></div>
+      </div>`,
+      save(form,item){item.orderId=Number(form.get('orderId')||0);item.dealer=form.get('dealer');item.amount=Number(form.get('amount')||0);item.mode=form.get('mode');item.date=form.get('date');item.ref=form.get('ref');item.status=form.get('status');item.rdm=form.get('rdm');item.incentive=Number(form.get('incentive')||0);item.notes=form.get('notes');}
+    },
+    delivery:{
+      titleAdd:'Add Delivery Proof', titleEdit:'Edit Delivery Proof', list:DB.delivery,
+      get:id=>DB.delivery.find(item=>Number(item.id)===Number(id)),
+      create:()=>({id:Math.max(0,...DB.delivery.map(item=>Number(item.id)||0))+1,orderId:DB.orders[0]?.id||1,dispatchInvoice:DB.dispatch[0]?.invoice||'',dealer:DB.dealers[0]?.name||'',deliveredQty:0,date:'2026-04-05',receiver:'',proofUrl:'',status:'Pending',remarks:''}),
+      render:data=>`<div class="entry-note">Delivery proof details update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Order ID</label><input name="orderId" type="number" value="${data.orderId ?? ''}" placeholder="1"></div>
+        <div class="form-group"><label>Dispatch Invoice</label><input name="dispatchInvoice" type="number" value="${data.dispatchInvoice ?? ''}" placeholder="302"></div>
+        <div class="form-group"><label>Dealer</label><select name="dealer">${DB.dealers.map(d=>`<option ${d.name===data.dealer?'selected':''}>${d.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label>Delivered Quantity</label><input name="deliveredQty" type="number" value="${data.deliveredQty ?? ''}" placeholder="600"></div>
+        <div class="form-group"><label>Delivery Date</label><input name="date" type="date" value="${escapeHtml(data.date || '2026-04-05')}"></div>
+        <div class="form-group"><label>Receiver Name</label><input name="receiver" type="text" value="${escapeHtml(cleanInjectedText(data.receiver || ''))}" placeholder="Receiver"></div>
+        <div class="form-group"><label>Status</label><select name="status"><option ${data.status==='Pending'?'selected':''}>Pending</option><option ${data.status==='Verified'?'selected':''}>Verified</option><option ${data.status==='Rejected'?'selected':''}>Rejected</option></select></div>
+        <div class="form-group"><label>Proof URL</label><input name="proofUrl" type="text" value="${escapeHtml(cleanInjectedText(data.proofUrl || ''))}" placeholder="https://..."></div>
+        <div class="form-group full-span"><label>Remarks</label><textarea name="remarks" placeholder="Delivery remarks...">${escapeHtml(cleanInjectedText(data.remarks || ''))}</textarea></div>
+      </div>`,
+      save(form,item){item.orderId=Number(form.get('orderId')||0);item.dispatchInvoice=Number(form.get('dispatchInvoice')||0);item.dealer=form.get('dealer');item.deliveredQty=Number(form.get('deliveredQty')||0);item.date=form.get('date');item.receiver=form.get('receiver');item.status=form.get('status');item.proofUrl=form.get('proofUrl');item.remarks=form.get('remarks');}
+    },
+    dealers:{
+      titleAdd:'Add Dealer', titleEdit:'Edit Dealer', list:DB.dealers,
+      get:id=>DB.dealers.find(item=>item.id===id),
+      create:()=>({id:'',name:'',phone:'',district:'',state:'HARYANA',address:'',credit:0,active:'Y'}),
+      render:data=>`<div class="entry-note">Dealer details update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Dealer ID</label><input name="id" type="text" value="${data.id || ''}" placeholder="Pal007"></div>
+        <div class="form-group"><label>Dealer Name</label><input name="name" type="text" value="${data.name || ''}" placeholder="Full name"></div>
+        <div class="form-group"><label>Phone</label><input name="phone" type="text" value="${data.phone || ''}" placeholder="9XXXXXXXXX"></div>
+        <div class="form-group"><label>District</label><input name="district" type="text" value="${data.district || ''}" placeholder="Palwal"></div>
+        <div class="form-group full-span"><label>Address</label><textarea name="address" placeholder="Full address...">${data.address || ''}</textarea></div>
+        <div class="form-group"><label>Credit Limit (Rs.)</label><input name="credit" type="number" value="${data.credit ?? ''}" placeholder="20000000"></div>
+        <div class="form-group"><label>Active</label><select name="active"><option ${data.active==='Y'?'selected':''}>Y</option><option ${data.active==='N'?'selected':''}>N</option></select></div>
+      </div>`,
+      save(form,item){item.id=form.get('id');item.name=form.get('name');item.phone=form.get('phone');item.district=form.get('district');item.address=form.get('address');item.credit=Number(form.get('credit')||0);item.active=form.get('active');}
+    },
+    employees:{
+      titleAdd:'Add Employee', titleEdit:'Edit Employee', list:DB.employees,
+      get:id=>DB.employees.find(item=>item.id===id),
+      create:()=>({id:'',name:'',role:'RDM',phone:'',region:'',zm:'',active:'Y'}),
+      render:data=>`<div class="entry-note">Employee details update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Employee ID</label><input name="id" type="text" value="${data.id || ''}" placeholder="Emp007"></div>
+        <div class="form-group"><label>Employee Name</label><input name="name" type="text" value="${data.name || ''}" placeholder="Full name"></div>
+        <div class="form-group"><label>Role</label><select name="role"><option ${data.role==='RDM'?'selected':''}>RDM</option><option ${data.role==='ZM'?'selected':''}>ZM</option><option ${data.role==='Staff'?'selected':''}>Staff</option></select></div>
+        <div class="form-group"><label>Phone</label><input name="phone" type="text" value="${data.phone || ''}" placeholder="9XXXXXXXXX"></div>
+        <div class="form-group"><label>Region</label><input name="region" type="text" value="${data.region || ''}" placeholder="Palwal / Faridabad"></div>
+        <div class="form-group"><label>Reporting ZM</label><input name="zm" type="text" value="${data.zm || ''}" placeholder="Manager name"></div>
+        <div class="form-group"><label>Active</label><select name="active"><option ${data.active==='Y'?'selected':''}>Y</option><option ${data.active==='N'?'selected':''}>N</option></select></div>
+      </div>`,
+      save(form,item){item.id=form.get('id');item.name=form.get('name');item.role=form.get('role');item.phone=form.get('phone');item.region=form.get('region');item.zm=form.get('zm');item.active=form.get('active');}
+    },
+    products:{
+      titleAdd:'Add Product', titleEdit:'Edit Product', list:DB.products,
+      get:id=>DB.products.find(item=>item.id===id),
+      create:()=>({id:'',name:'',category:'',unit:'Bags',mrp:0,rate:0,gst:5,active:'Y'}),
+      render:data=>`<div class="entry-note">Product pricing aur GST update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Product ID</label><input name="id" type="text" value="${data.id || ''}" placeholder="Pro005"></div>
+        <div class="form-group"><label>Product Name</label><input name="name" type="text" value="${data.name || ''}" placeholder="NPK 12:32:16"></div>
+        <div class="form-group"><label>Category</label><input name="category" type="text" value="${data.category || ''}" placeholder="Primary Fertilizer"></div>
+        <div class="form-group"><label>Unit</label><select name="unit"><option ${data.unit==='Bags'?'selected':''}>Bags</option><option ${data.unit==='Bucket'?'selected':''}>Bucket</option><option ${data.unit==='Kg'?'selected':''}>Kg</option><option ${data.unit==='Litre'?'selected':''}>Litre</option></select></div>
+        <div class="form-group"><label>MRP (Rs.)</label><input name="mrp" type="number" value="${data.mrp ?? ''}" placeholder="1450"></div>
+        <div class="form-group"><label>Sale Rate (Rs.)</label><input name="rate" type="number" value="${data.rate ?? ''}" placeholder="1370"></div>
+        <div class="form-group"><label>GST %</label><input name="gst" type="number" value="${data.gst ?? ''}" placeholder="5"></div>
+        <div class="form-group"><label>Active</label><select name="active"><option ${data.active==='Y'?'selected':''}>Y</option><option ${data.active==='N'?'selected':''}>N</option></select></div>
+      </div>`,
+      save(form,item){item.id=form.get('id');item.name=form.get('name');item.category=form.get('category');item.unit=form.get('unit');item.mrp=Number(form.get('mrp')||0);item.rate=Number(form.get('rate')||0);item.gst=Number(form.get('gst')||0);item.active=form.get('active');}
+    },
+    transporters:{
+      titleAdd:'Add Transporter', titleEdit:'Edit Transporter', list:DB.transporters,
+      get:id=>DB.transporters.find(item=>item.id===id),
+      create:()=>({id:'',name:'',phone:'',city:'',notes:'',active:'Y'}),
+      render:data=>`<div class="entry-note">Transporter details update karein.</div><div class="form-grid">
+        <div class="form-group"><label>Transporter ID</label><input name="id" type="text" value="${data.id || ''}" placeholder="TR005"></div>
+        <div class="form-group"><label>Transporter Name</label><input name="name" type="text" value="${data.name || ''}" placeholder="New Transport"></div>
+        <div class="form-group"><label>Phone</label><input name="phone" type="text" value="${data.phone || ''}" placeholder="9XXXXXXXXX"></div>
+        <div class="form-group"><label>City</label><input name="city" type="text" value="${data.city || ''}" placeholder="Meerut"></div>
+        <div class="form-group full-span"><label>Notes</label><textarea name="notes" placeholder="Route / office address / remarks...">${data.notes || ''}</textarea></div>
+        <div class="form-group"><label>Active</label><select name="active"><option ${data.active==='Y'?'selected':''}>Y</option><option ${data.active==='N'?'selected':''}>N</option></select></div>
+      </div>`,
+      save(form,item){item.id=form.get('id');item.name=form.get('name');item.phone=form.get('phone');item.city=form.get('city');item.notes=form.get('notes');item.active=form.get('active');}
+    }
+  }[page];
+}
+
+function openEntryModal(page,mode='add',id=null){
+  const config=getModalConfig(page);
+  if(!config){
+    const overlay=document.createElement('div');
+    overlay.className='modal-overlay';
+    overlay.style.position='fixed';
+    overlay.innerHTML=`<div class="modal"><div class="modal-header"><div><div class="modal-title">New Entry</div><div class="modal-subtitle">Phoenix Plants CRM quick entry form</div></div><button class="close-btn" onclick="this.closest('.modal-overlay').remove()">&times;</button></div><div class="modal-body"><div class="empty-state">Is page ke liye quick entry available hai.<br>Sidebar se specific module select karein.</div></div><div class="form-actions"><button class="btn" onclick="this.closest('.modal-overlay').remove()">Close</button></div></div>`;
+    document.getElementById('app').appendChild(overlay);
+    return;
+  }
+  modalContext={mode,page,id};
+  const data=mode==='edit'?{...config.get(id)}:config.create();
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.style.position='fixed';
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">${mode==='edit'?config.titleEdit:config.titleAdd}</div>
+        <div class="modal-subtitle">Phoenix Plants CRM quick entry form</div>
+      </div>
+      <button class="close-btn" onclick="this.closest('.modal-overlay').remove()">&times;</button>
+    </div>
+    <div class="modal-body"><form id="entry-form">${config.render(data)}</form></div>
+    <div class="form-actions">
+      <button type="button" class="btn btn-primary" onclick="saveEntry(this)">${mode==='edit'?'Update Entry':'Save Entry'}</button>
+      <button type="button" class="btn" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.getElementById('app').appendChild(overlay);
+}
+
+openAddModal=function(){
+  const page = getModalConfig(currentPage) ? currentPage : 'orders';
+  if (page !== currentPage) {
+    nav(page);
+  }
+  openEntryModal(page,'add');
+};
+function openEditModal(page,id){ openEntryModal(page,'edit',/^\d+$/.test(String(id))?Number(id):id); }
+
+saveEntry=async function(btn){
+  const config=getModalConfig(modalContext.page);
+  if(!config){
+    btn.closest('.modal-overlay').remove();
+    return;
+  }
+  const form=new FormData(btn.closest('.modal').querySelector('#entry-form'));
+  let target;
+  if(modalContext.mode==='edit'){
+    target=config.get(modalContext.id);
+  }else{
+    target=config.create();
+    config.list.push(target);
+  }
+  config.save(form,target);
+  persistState();
+  let filterAutoReset=false;
+  if(modalContext.mode==='add' && ['orders','dispatch','payments','delivery'].includes(modalContext.page)){
+    if(!doesEntryMatchCurrentFilter(target.date)){
+      filterState.month='all';
+      filterState.year='all';
+      filterAutoReset=true;
+    }
+  }
+  render();
+  const dbResult=await persistToDb(modalContext.page,target,modalContext.mode);
+  const isQueued=Boolean(dbResult?.queued);
+  if(modalContext.mode==='add' && dbResult?.ok && dbResult?.insert_id){
+    if(modalContext.page==='orders' || modalContext.page==='payments' || modalContext.page==='delivery'){
+      target.id=Number(dbResult.insert_id);
+    }
+  }
+  persistState();
+  const syncLine=isQueued
+    ? 'Database down tha: entry safe queue me store ho gayi.'
+    : (dbResult?.ok ? 'Database sync successful.' : 'Database sync pending (backend unavailable).');
+  const filterLine=filterAutoReset
+    ? '<br>Note: New entry dikhane ke liye filter All Months / All Years pe set kar diya gaya.'
+    : '';
+  const overlay=btn.closest('.modal-overlay');
+  overlay.innerHTML=`<div class="modal"><div style="text-align:center;padding:30px"><div style="font-size:32px;margin-bottom:12px">${modalContext.mode==='edit'?'Updated':'Done'}</div><div style="font-size:15px;font-weight:500;margin-bottom:8px">${modalContext.mode==='edit'?'Entry Updated!':'Entry Saved!'}</div><div style="font-size:13px;color:var(--color-text-secondary)">Data successfully ${modalContext.mode==='edit'?'update':'add'} ho gaya<br>${syncLine}${filterLine}</div><button class="btn btn-primary" style="margin-top:14px" onclick="this.closest('.modal-overlay').remove();render()">Done</button></div></div>`;
+};
+
+restoreState();
+sanitizeDbTextFields();
+syncDbToUi().finally(()=>{
+  setTimeout(()=>render(), 100);
+});
+</script>
+
+
